@@ -1,0 +1,198 @@
+//This file is used to hold the functions and definitons for the linked list
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+	int number;
+	Node* next;
+	Node* prev;
+
+};
+
+class LinkedList
+{
+private:
+	Node* head;
+	Node* tail;
+public:
+	//constructor
+	LinkedList()
+	{
+		head = nullptr;
+		tail = nullptr; 
+	}
+
+	bool isempty()
+	{
+		if (head == nullptr)
+			return true;
+		else
+			return false;
+	}
+
+	int length()
+	{
+		int length = 0;
+		Node* current = head;
+		while(current != nullptr)
+		{
+			length++;
+			current = current->next;
+
+		}
+		return length;
+	}
+
+	void print()
+	{
+		int num = 0;
+		Node* current = head;
+		if (isempty())
+			cout << "Linked List is empty." << endl;
+
+		while(current != nullptr)
+		{
+			cout << "Node " << num << " : " << current->number << endl;
+			current = current->next;
+			num++;
+		}
+
+	}
+
+	void altPrint()
+	{
+		Node* current = head;
+		if(isempty())
+			cout << "Linked List is empty." << endl;
+		while (current != nullptr)
+		{
+			cout << current->number << " ";
+			current = current->next;
+		}
+		cout << endl;
+	}
+
+	//assertion function to insert new node into list
+	void insertAtStart(int c)
+	{
+		Node* temp = new Node();
+		temp->number = c;
+
+		if (isempty())
+		{
+			temp->next = nullptr;
+			temp->prev = nullptr;
+		}
+		else
+		{
+			temp->next = head;
+			temp->prev = nullptr;
+		}
+
+		head = temp;
+	}
+
+	void insertAtEnd(int c)
+	{
+		if (isempty())
+			insertAtStart(c);
+		else
+		{
+			Node* temp = new Node();
+			temp->number = c;
+
+			Node* current = head;
+			while (current->next != nullptr)
+				current = current->next;
+
+			current->next = temp;
+			temp->next = nullptr;
+		}
+	}
+
+	Node*findNode(int c)
+	{
+		Node* current = head;
+		if (isempty())
+			return nullptr;
+
+		while (current != nullptr)
+		{
+			if (current->number == c)
+				return current; //Found it!
+
+			current = current->next;
+		}
+		return nullptr; //Did not find it!
+	}
+
+	void insertBetween(int prev, int c)
+	{
+		Node* before = findNode(prev);
+		if (before == nullptr)
+			insertAtEnd(c);
+		else
+		{
+			Node* temp = new Node();
+			temp->number = c;
+			temp->next = before->next;
+			before->next = temp;
+		}
+	}
+
+	//Delete function, reads in user integer input
+	void deleteNode(int c)
+	{
+		Node* temp = findNode(c);
+		if (temp == nullptr)
+			return;
+		else
+		{
+			if (temp == head)
+			{
+				head = temp->next;
+				delete temp;
+			}
+
+			else
+			{
+				Node* before = head;
+				while (before->next != temp)
+					before = before->next;
+
+				before->next = temp->next;
+				delete temp;
+			}
+		}
+	}
+
+	bool searchForNumber(int c)
+	{
+		Node* current = head;
+		if (isempty())
+			return false;
+		while (current != nullptr)
+		{
+			if (current->number = c)
+				return true;
+
+			current = current->next;
+		}
+		return false;
+	}
+
+	//Destructor
+	~LinkedList()
+	{
+		Node* current = head;
+		while (current != nullptr)
+		{
+			Node* next = current->next;
+			delete current;
+			current = next;
+		}
+		head = nullptr;
+	}
+
+};
