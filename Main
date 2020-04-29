@@ -1,0 +1,85 @@
+//Author: Sharriff Dyer II
+//Date Created: 3/29/20
+//Date Modified: 4/28/20
+//Purpose: This program demostrates adding, deleting, and printing user inputted integers from a linked list.
+// Main does not include implementations of every function in source for simplicity.
+
+#include <iostream>
+#include "source.cpp"
+using namespace std;
+
+void main()
+{
+LinkedList myList;
+
+int choice = 0;
+int num = 0;
+
+//Menu
+do
+{
+	cout << "1) Add an integer" << endl;
+	cout << "2) Delete an integer" << endl;
+	cout << "3) Display list" << endl;
+	cout << "4) Quit" << endl;
+	cout << "Selection: ";
+	cin >> choice;
+	cout << endl;
+
+
+	switch (choice)
+	{
+	case 1:
+		cout << "Enter integer to add: ";
+		cin >> num;
+		myList.insertAtStart(num);
+		break;
+	case 2:
+		cout << "Enter integer to delete: ";
+		cin >> num;
+		myList.deleteNode(num);
+		break;
+	case 3:
+		myList.print();
+		break;
+
+	}
+} while (choice != 4);
+
+switch(choice)
+{
+case 1: 
+	cout << "Enter integer(s): ";
+		cin >> num;
+		if (myList.searchForNumber(num) == false)
+		{
+			myList.insertAtStart(num);
+		}
+			else
+			{ 
+			cout << "Integer is already contained in list" << endl;
+			}
+		break;
+case 2:
+	cout << "Enter integer to delete";
+	cin >> num;
+	myList.deleteNode(num);
+	break;
+case 3:
+	myList.print();
+	break;
+case 4:
+	break;
+default:
+	break;
+
+}
+
+
+myList.altPrint();
+
+
+cout << "Current length of myList is: " << myList.length() << endl;
+
+	system("pause");
+}
